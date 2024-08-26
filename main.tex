@@ -56,7 +56,15 @@
 First and foremost, welcome to the CMS team of Strasbourg and congratulation for being promoted to Ph.D student (or intern). This paper will try to quickly give you tools and useful links to better understand what are all the acronyms that you may encounter, LaTeX related things, CMS related things, etc (Nothing related to the Ecole Doctoral will be mentioned as rules given may change over years...). This list won't be exhaustive as there so many things to talk about but we hope that this will help you in any kind of way to fasten your progress in your work. For global IPHC commands, see: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/IPHCusefulCommands#VScode}{IPHC useful commands}. There is also a nice VScode tutorial if you a not familiar with it. Good luck!  
 
 \section{Acronyms}
-    A set of Acronyms is defined in a Twiki page in : \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookGlossary}{TwikiAcronyms}. Twiki pages are like wiki pages but for the CMS documentation of everything. By the time you read this, this may have changed to gitlab or something else.
+    A set of Acronyms is defined in a Twiki page in : \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookGlossary}{TwikiAcronyms}. Twiki pages are like wiki pages but for the CMS documentation of everything. By the time you read this, this may have changed to gitlab or something else. We will just give some that you may encounter rapidly :
+    \begin{itemize}
+        \item POG : Physics object group : Muon POG, tau POG, EGamma POG, etc
+        \item PAG : Physics Analysis Group : EXOTICA, Beyond-two-generations (B2G), TOP, etc
+        \item L3-L2-L1 Conveners : Level 3 (2 and 1) conveners. There are responsible of a POG or PAG. And for example, the Long-lived Particle (LLP) group is a level-3 PAG below the Level-2 : Exotica. See the twiki page of LLP \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/ExoticaLongLived}{TwikiLLP}.
+        \item CADI-line : Reference number for any analysis : EXO-19-001, B2G-22-005, HIG-22-004
+        \item AN : Analysis Note : every details of an Analysis written in paper
+        \item PAS: Physics Analysis Summary : Summary of an Analysis Note, basically
+    \end{itemize}
 %%%%%%%%%%%%%%%%%%%
 \section{Compact Muon Solenoid detector }
     
@@ -73,10 +81,12 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
 
     \subsection{The detector}
     \includegraphics[height=4cm, width=8cm, trim= 0cm 0cm 0cm 0cm,clip]{Images/cmsAll.png}
+    \captionof{figure}{Transverse view of CMS}
     \label{fig: CMS}
     The CMS detector is 15 meter wide and 21 meter long. You can see a transverse view of CMS in Fig.\ref{fig: CMS}. The description will be a bit biased since the Strasbourg team is highly involved in the current tracker and its upgrade. At the very center, the closes part with respect to the interaction point is the beam pipe.Then comes the tracker that is divided into two parts (see Fig.\ref{fig: Tracker}) : Pixels and strips. Pixels are the innermost part of the tracker and also divided in to two parts: Barrel Pixels (BPIX) and Forward Pixels (FPIX). After the Pixels are the strips also divided into several parts: Tracker Inner Barrel (TIB), Tracker Outer Barrel (TOB). Then, there the two forward parts : the Tracker Inner Disks (TID) and Tracker End Caps (TEC). The characteristics (pitch, width, etc) of the modules of the silicon strip tracker change depending on where there are in the tracker.
     For the tracking, an iterative process is implemented to look for tracks. For electrons, it's slightly different due to Bremsstrahlung, the tracking is using the GaussianSum filter to take into account the information of photons. You may therefore encounter GSF electrons when coding :D. THe goal of the tracker is to reconstruct the tracks of charged particles (that deposits energy in the layers of the tracker)\\
     \includegraphics[height=4cm, width=8cm, trim= 0cm 0cm 0cm 0cm,clip]{Images/CMSTracker.png}\label{fig: Tracker}
+    \captionof{figure}{Phase-I tracker of CMS (Phase-0 Tracker had one less FPIX and BPIX layer + slightly different positions  for the Pixel layers)}
     After the tracker comes the Electromagnetic and hadronic calorimeters. The former is used to detect energy deposits from photons and electrons (used for the GSF tracking). The hadronic calorimeter is used to detect energy deposits from both neutral and charged hadrons. \\
     Finally, there are the muons chambers. Again there are different types of subdetector for muon chambers like Resistive Plate Chambers (RPCs), Cathode Strip Chambers (CSC), Gas Electron Multiplier (GEM), Drift Tubes (DTs).Here is a small document to explain how each one of them works : \href{https://cds.cern.ch/record/2698492/files/Poster-2019-989.pdf}{Muon Poster} (click on Muon Poster).
 
@@ -117,15 +127,27 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
   
   
 \section{Physics Analysis}
-Madgraph / generation, pythia8, powheg
 
-Gen-Sim, Raw, reco, AOD, MniAOD, Nanoaod
-    We have discussed dataformat  in a section above. CERN is actually pushing towards NanoAOD but RECO, AOD and MiniAOD can be used. For your analysis, there is a high chance that you work with at least AOD if MiniAOD if not nanoAOD :D. \\
-    Depending on the data format that you are using, the collection of tracks (codewise) that you can use is different. 
-https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookAnalysisOverviewIntroduction
-    https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook
+    When you start a physics analysis, you will probably invited to look for a Beyond the Standard Model physics process or improve a measurement of an existing quantity. For the former, since what you are looking for has not yet been discovered, you need simulation to learn the behavior of your signal in the CMS experiment. To simulate events (we talk Monte-Carlo events or MC events), you need a generator. The one that you may encounter the most is MadGraph and you can actually use it on your own if you want (See Tutorial\_MC\_production\_for...). MadGraph is usually combined with another one, it can be Pythia8, powheg (there are others) to take care of the hadronisation as madgraph is not really efficient with the simulation of low energy jets while the other two have a better description of the low energy jets.  This is why you will encounter the name of Madgrapg and pythia or powheg when looking at MC samples in the CMS database (\href{https://cmsweb.cern.ch/das/}{CDAS}). Here are a few examples :\begin{itemize}
+        \item /TTTo2L2Nu\_TuneCP5\_13TeV-powheg-pythia8
+        \item /ST\_tW\_top\_5f\_NoFullyHadronicDecays\_TuneCP5\_13TeV-powheg-pythia8
+        \item /TTWW\_TuneCP5\_13TeV-madgraph-pythia8
+    \end{itemize}
+    The first bullet is a $t\Bar{t}$ sample where both W coming from the top decays decay leptonically. The TuneCP5 is a set of parameter of the generators. There can be many names for the tunes but CP5 is a common one. The final output of the generator is a LHE file (Les Houches Event file). It contains all the information related to the event generated (4-vectors, lifetime, mass, pdf weights, etc). The generation part of the events is done outside/independent of the CMS environment (but you have to take into account some CMS parameters like the PDF of the energy of the beams, etc).
+
+    Now, the CMS process will come into place. There are 4 steps to follow in order to generate the vents that you will be able to analyze.    
+    We won't go into details but the command that is used is here \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCmsDriver}{CMSDRIVER}. If you have to use this command, you may ask for help the MC\&I contact of your PAG. The final output is a root file that contains a certain amount of information. This "amount" will depend on the data fromat that you want to use : RAW, RECO, AOD, MniAOD, Nanoaod (see : \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookAnalysisOverviewIntroduction}{DataFormats}). 
+ 
+    CMS is actually pushing towards NanoAOD but RECO, AOD and MiniAOD can still be used. For your analysis, there is a high chance that you work with at least AOD if not MiniAOD if not nanoAOD :D. \\
+    Depending on the data format that you are using, the collection of physics object (codewise) that you can use is different. Links are provided in the \textbf{Physics Object} section.\\
+
+    A global overview of an analysis is given in this workbook \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook}{Analysis Workbook}\\
+        
     
 \subsection{Analysis Strategy}
+    Once you have decided of the physics process you want to observe (and generated the MC samples of your signal if needed), you will have to define a set of cuts to observe your signal as it may be hidden because of too much background. These cuts can be performed on some basic kinematic variables but they can be much more sophisticated using Machine learning (Graph Neural Network, Boosted Decision Tree, Convolutionnal Neural Network, etc...). Most cuts have to keep the maximum of signal events while removing as much as possible the background events. First, you have to test the cuts on some MC samples (signal and background). Once you are satisfied with your cuts on simulation, you can go to the data (be careful, do not look to the signal region, where you expect to observe your signal as it is forbidden, you need the agreement of the CMS collaboration). To define a signal region, you will sometimes ear about the ABCD method which is about seprating the phase space into 4 regions : A,B,C and D. For that, you need two decorralated variables tat you apply a cut on.
+    We won't go further than that but the thing to remember is to define what you want to observe at the end: a mass, an angle, a specific distribution, etc and how you define your region of signal, with which sets of cuts.
+    
 \subsection{Run 2}
     Global information about Run 2 : \\
     \href{https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun2LegacyAnalysis}{Global Information} \\
@@ -158,7 +180,7 @@ https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookAnalysisOverviewIntroduct
     Once you have implemented your analysis strategy, you meed to set limits on some cross-sections, couplings, masses, or even define scale factors. A tool has been developed within the CMS collaboration and made available to anyone : \href{https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/latest/}{Combine}. It was first used to discover the Higgs boson back in 2012. Now, it  has a general purpose and really powerful. However, it takes quite some time to fully grasp and understand everything. Following the tutorial first is the best (and a decent understanding of statistics is needed)- \href{https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/latest/part5/longexercise/}{Tutorial}. You will probably see some Brazilian plots in your time here, and they may come from Combine.
 
 \section{crab}
-\href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile}{CrabconfigFile}
+
  During your Ph.D, you may need to run on MC simulation samples with millions of events. You can do that on your local computer but you may finish your Ph.D  before you finish analyzing the events. To address this issue, you have access to a grid. For that, you need a certificate that needs to be updated once every year. \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookChapter5}{CMSCertificate} and \href{https://indico.in2p3.fr/event/32895/}{Yannick's slides}. Once you have your certificate, you can submit crab jobs using the following commands (in a cms envrionnement area): 
  
 'source /cvmfs/cms.cern.ch/crab3/crab.sh' \\
@@ -180,11 +202,14 @@ source /cvmfs/cms.cern.ch/crab3/crab.sh )\\
 gfal-ls davs://sbgdcache.in2p3.fr/cms/phedex/store/user/$<$Your directory$>$\\
 gfal-copy -r davs://sbgdcache.in2p3.fr/cms/phedex/store/user/$<$Your directory$>$ \\
 Then you will probably need to hadd (gather together) the different output files and you are done.
+Here is the documentation of the crab config file : \\
+\href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile}{CrabconfigFile}
 
 %%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
 
-I hope that it somehow helped you. It is not exhaustive and probably not up-to-date when you will be reading it but it gives hints or potential solution to your issues. Good luck in your Ph.D (or internship)\\
+I hope that it somehow helped you. It is not exhaustive and probably not up-to-date when you will be reading it but it gives hints or potential solution to your issues. Good luck in your Ph.D (or internship).\\
+PS : Any feedback is appreciated ! (paul.vaucelle@iphc.cnrs.fr up until september 2025, after that i don't know )
 
 La Relève 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
