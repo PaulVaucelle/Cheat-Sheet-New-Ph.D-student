@@ -4,5 +4,7 @@ We hope that everything that is in there will be somehow helpful. From LaTeX tem
 There might be things that you do not understand at first, or things that are not useful at all. This repo is made to give some help about a lot of things. Please be kind :D.
 You can check the pdf file to have all the information that you may need or want !
 
+PS  : Download the pdf to have direct access to the different links included in it !
+
 # Have a good Ph.D !
  La Relève
