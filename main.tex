@@ -62,7 +62,7 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
         \item PAG : Physics Analysis Group : EXOTICA, Beyond-two-generations (B2G), TOP, etc
         \item L3-L2-L1 Conveners : Level 3 (2 and 1) conveners. There are responsible of a POG or PAG. And for example, the Long-lived Particle (LLP) group is a level-3 PAG below the Level-2 : Exotica. See the twiki page of LLP \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/ExoticaLongLived}{TwikiLLP}.
         \item CADI-line : Reference number for any analysis : EXO-19-001, B2G-22-005, HIG-22-004
-        \item AN : Analysis Note : every details of an Analysis written in paper
+        \item AN : Analysis Note : every details of an Analysis written in paper (restricted access to people from the collaboration)
         \item PAS: Physics Analysis Summary : Summary of an Analysis Note, basically
     \end{itemize}
 %%%%%%%%%%%%%%%%%%%
@@ -128,15 +128,15 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
   
 \section{Physics Analysis}
 
-    When you start a physics analysis, you will probably invited to look for a Beyond the Standard Model physics process or improve a measurement of an existing quantity. For the former, since what you are looking for has not yet been discovered, you need simulation to learn the behavior of your signal in the CMS experiment. To simulate events (we talk Monte-Carlo events or MC events), you need a generator. The one that you may encounter the most is MadGraph and you can actually use it on your own if you want (See Tutorial\_MC\_production\_for...). MadGraph is usually combined with another one, it can be Pythia8, powheg (there are others) to take care of the hadronisation as madgraph is not really efficient with the simulation of low energy jets while the other two have a better description of the low energy jets.  This is why you will encounter the name of Madgrapg and pythia or powheg when looking at MC samples in the CMS database (\href{https://cmsweb.cern.ch/das/}{CDAS}). Here are a few examples :\begin{itemize}
+    When you start a physics analysis, you will probably invited to look for a Beyond the Standard Model physics process or improve a measurement of an existing quantity. For the former, since what you are looking for has not yet been discovered, you need simulation to learn the behavior of your signal in the CMS experiment. To simulate events (we say Monte-Carlo events or MC events), you need a generator. The one that you may encounter the most is MadGraph and you can actually use it on your own if you want (See Tutorial\_MC\_production\_for...). MadGraph is usually combined with another one, it can be Pythia8, powheg (there are others) to take care of the hadronisation as madgraph is not really efficient with the simulation of low energy jets while the other two have a better description of the low energy jets.  This is why you will encounter the name of Madgrapg and pythia or powheg when looking at MC samples in the CMS database (\href{https://cmsweb.cern.ch/das/}{CDAS}). Here are a few examples :\begin{itemize}
         \item /TTTo2L2Nu\_TuneCP5\_13TeV-powheg-pythia8
         \item /ST\_tW\_top\_5f\_NoFullyHadronicDecays\_TuneCP5\_13TeV-powheg-pythia8
         \item /TTWW\_TuneCP5\_13TeV-madgraph-pythia8
     \end{itemize}
     The first bullet is a $t\Bar{t}$ sample where both W coming from the top decays decay leptonically. The TuneCP5 is a set of parameter of the generators. There can be many names for the tunes but CP5 is a common one. The final output of the generator is a LHE file (Les Houches Event file). It contains all the information related to the event generated (4-vectors, lifetime, mass, pdf weights, etc). The generation part of the events is done outside/independent of the CMS environment (but you have to take into account some CMS parameters like the PDF of the energy of the beams, etc).
 
-    Now, the CMS process will come into place. There are 4 steps to follow in order to generate the vents that you will be able to analyze.    
-    We won't go into details but the command that is used is here \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCmsDriver}{CMSDRIVER}. If you have to use this command, you may ask for help the MC\&I contact of your PAG. The final output is a root file that contains a certain amount of information. This "amount" will depend on the data fromat that you want to use : RAW, RECO, AOD, MniAOD, Nanoaod (see : \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookAnalysisOverviewIntroduction}{DataFormats}). 
+    Now, the CMS process will come into place. There are 4 steps to follow in order to generate the events that you will be able to analyze.    
+    We won't go into details but the command that is used is here \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCmsDriver}{CMSDRIVER}. If you have to use this command, you may ask the MC\&I contact of your PAG for help. The final output is a root file that contains a certain amount of information. This "amount" will depend on the data format that you want to use : RAW, RECO, AOD, MniAOD, Nanoaod (see : \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookAnalysisOverviewIntroduction}{DataFormats}). 
  
     CMS is actually pushing towards NanoAOD but RECO, AOD and MiniAOD can still be used. For your analysis, there is a high chance that you work with at least AOD if not MiniAOD if not nanoAOD :D. \\
     Depending on the data format that you are using, the collection of physics object (codewise) that you can use is different. Links are provided in the \textbf{Physics Object} section.\\
@@ -145,9 +145,9 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
         
     
 \subsection{Analysis Strategy}
-    Once you have decided of the physics process you want to observe (and generated the MC samples of your signal if needed), you will have to define a set of cuts to observe your signal as it may be hidden because of too much background. These cuts can be performed on some basic kinematic variables but they can be much more sophisticated using Machine learning (Graph Neural Network, Boosted Decision Tree, Convolutionnal Neural Network, etc...). Most cuts have to keep the maximum of signal events while removing as much as possible the background events. First, you have to test the cuts on some MC samples (signal and background). Once you are satisfied with your cuts on simulation, you can go to the data (be careful, do not look to the signal region, where you expect to observe your signal as it is forbidden, you need the agreement of the CMS collaboration). To define a signal region, you will sometimes ear about the ABCD method which is about seprating the phase space into 4 regions : A,B,C and D. For that, you need two decorralated variables tat you apply a cut on.
-    We won't go further than that but the thing to remember is to define what you want to observe at the end: a mass, an angle, a specific distribution, etc and how you define your region of signal, with which sets of cuts.\\
-    \textbf{Note 1 :} If you are using private MC sample for your analysis, try to get a central production of them as soon as possible, it will avoid some unnecessary stress at the end of  your Ph.D. You should discuss with the MC\&I contact of your group but you can already have a look at this : \href{https://cms-pdmv.gitbook.io/project/mccontact#preliminary-steps}{Steps to follow} and also this : \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/GitRepositoryForGenProduction}{generate pull request}.
+    Once you have decided of the physics process you want to observe (and generated the MC samples of your signal if needed), you will have to define a set of cuts to observe your signal as it may be hidden because of too much background. These cuts can be performed on some basic kinematic variables but they can be much more sophisticated using Machine learning (Graph Neural Network, Boosted Decision Tree, Convolutionnal Neural Network, etc.). Most cuts have to keep the maximum of signal events while removing as much as possible the background events. First, you have to test the cuts on some MC samples (signal and background). Once you are satisfied with your cuts on simulation, you can go to the data (be careful, do not look at the signal region, where you expect to observe your signal as it is forbidden, you need the agreement of the CMS collaboration). To define a signal region, you will sometimes hear about the ABCD method which is about separating the phase space into 4 regions : A,B,C and D. For that, you need two decorrelated variables that you apply a cut on.
+    We won't go further than that but the thing to remember is to define what you want to observe at the end: a mass, an angle, a specific distribution, etc. and how you define your region of signal, with which sets of cuts.\\
+    \textbf{Note 1 :} If you are using private MC samples for your analysis, try to get a central production of them as soon as possible, it will avoid some unnecessary stress at the end of your Ph.D. You should discuss with the MC\&I contact of your group but you can already have a look at this : \href{https://cms-pdmv.gitbook.io/project/mccontact#preliminary-steps}{Steps to follow} and also this : \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/GitRepositoryForGenProduction}{generate pull request}.
     
 \subsection{Run 2}
     Global information about Run 2 : \\
@@ -160,14 +160,14 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
     \href{https://indico.cern.ch/event/1247210/sessions/478562/attachments/2587866/4465075/MuonPOG_tutorial_part2.pdf}{MuonSF} \\
     \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideMuonIdRun2}{MuonID} \\
     \href{https://twiki.cern.ch/twiki/bin/view/CMS/RochcorMuon}{RochesterCorrections}\\
-    There are many more things to know but this give you a firstview of what to check. You can also check the page to also summarizes kind of everything : \href{https://twiki.cern.ch/twiki/bin/view/CMS/TopSystematics}{TopSyst} 
+    There are many more things to know but this give you a firstview of what to check. You can also check the page that summarizes kind of everything : \href{https://twiki.cern.ch/twiki/bin/view/CMS/TopSystematics}{TopSyst} 
     
 \subsection{Run 3}
     Global information about Run 3 : \href{https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun3Analysis#Run_3_Analysis}{Click}
 
     You can follow the links for Run 2, there may redirect you to Run 3 pages :D or still be valid for Run 3.
 \subsection{Physics Object}
-    It may be useful when you are starting an analysis from scratch. If you are using an already existing framework for your analysis, then you might nit care about the following. \\
+    It may be useful when you are starting an analysis from scratch. If you are using an already existing framework for your analysis, then you might not care about the following. \\
     For the different data format, you do not manipulate the physics object in the same way, so here are two workbooks for the MiniAOD and NanoAOD : \\
     \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookMiniAOD2017}{MiniAOD}\\
     \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookNanoAOD}{NanoAOD}\\
@@ -178,7 +178,7 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
 \subsection{Combine}
 
 
-    Once you have implemented your analysis strategy, you meed to set limits on some cross-sections, couplings, masses, or even define scale factors. A tool has been developed within the CMS collaboration and made available to anyone : \href{https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/latest/}{Combine}. It was first used to discover the Higgs boson back in 2012. Now, it  has a general purpose and really powerful. However, it takes quite some time to fully grasp and understand everything. Following the tutorial first is the best (and a decent understanding of statistics is needed)- \href{https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/latest/part5/longexercise/}{Tutorial}. You will probably see some Brazilian plots in your time here, and they may come from Combine.
+    Once you have implemented your analysis strategy, you need to set limits on some cross-sections, couplings, masses, or even define scale factors. A tool has been developed within the CMS collaboration and made available to anyone : \href{https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/latest/}{Combine}. It was first used to discover the Higgs boson back in 2012. Now, it  has a general purpose and really powerful. However, it takes quite some time to fully grasp and understand everything. Following the tutorial first is the best (and a decent understanding of statistics is needed)- \href{https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/latest/part5/longexercise/}{Tutorial}. You will probably see some Brazilian plots in your time here, and they may come from Combine.
 
 \section{crab}
 
@@ -193,7 +193,7 @@ where crab\_config\_mc\_2018.py is a configuration file for your crab jobs. A ve
 You have to use slightly different commands for that :
 ./multicrab --crabCmd submit (to launch the jobs)
 
-./multicrab --crabCmd status --workArea ./$<$work\_directory$>$ (to get the status of the jobs : failed, idle , running ,finished or not submitted)\\
+./multicrab --crabCmd status --workArea ./$<$work\_directory$>$ (to get the status of the jobs : failed, idle, running, finished or not submitted)\\
 ./multicrab --crabCmd kill --workArea ./$<$work\_directory$>$ (to kill the jobs )\\
 ./multicrab --crabCmd resubmit --workArea ./$<$work\_directory$>$ (resubmit failed jobs)\\
 
