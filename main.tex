@@ -206,6 +206,26 @@ Then you will probably need to hadd (gather together) the different output files
 Here is the documentation of the crab config file : \\
 \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile}{CrabconfigFile}
 
+\section{Remote working/ background tasks}
+
+During your Ph.D/ internship, you may want to run programs while you are enjoying life or your code takes multiple hours to finish (even days) and you don't want to keep your computer open. Depending on the servers you are logged in, the solution is different :
+
+\begin{itemize}
+    \item uiX \begin{enumerate}
+        \item screen -S <name>
+        \item  "crtl+a+d" to detach from the session
+        \item screen -R (to view all the sessions you have opened)
+        \item screen -R <name> (to continue working on a session)
+        \item screen -X -S <name> to kill a session
+    \end{enumerate}
+    \item lxplus \begin{enumerate}
+        \item systemctl --user enable --now tmux.service (only the first time, i think)
+        \item tmux new -s <name>
+        \item "crtl+b"+d to detach from the session ("exit" if you want to kill the session)
+        \item tmux ls (to view all the sessions you have opened)
+        \item tmux attach -t <name> (to continue working on a session)
+    \end{enumerate}
+\end{itemize}
 %%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
 
