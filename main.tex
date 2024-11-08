@@ -227,6 +227,14 @@ During your Ph.D/ internship, you may want to run programs while you are enjoyin
     \end{enumerate}
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%
+\section{Storage of data at IPHC}
+For the people using crab (and potentially other systems), the output will be stored on dcache. To access the your data, you will need to have a valid certificate and enter the following command (NOT IN A cms environment):\begin{itemize}
+    \item source /cvmfs/cms.cern.ch/crab3/crab.sh 
+    \item (Potentially :) voms-proxy-init -rfc -voms cms -valid 192:00
+    \item gfal-ls davs://sbgdcache.in2p3.fr/cms/phedex/store/user/<name> to list the files (no option for ls is available)
+    \item Example : gfal-ls davs://sbgdcache.in2p3.fr/cms/phedex/store/user/pvaucell/
+    \item gfal-copy -r davs://sbgdcache.in2p3.fr/cms/phedex/store/user/pvaucell/<directory> . to copy files
+\end{itemize}
 \section{Conclusion}
 
 I hope that it somehow helped you. It is not exhaustive and probably not up-to-date when you will be reading it but it gives hints or potential solution to your issues. Good luck in your Ph.D (or internship).\\
