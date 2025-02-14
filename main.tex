@@ -53,7 +53,7 @@
 %%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-First and foremost, welcome to the CMS team of Strasbourg and congratulation for being promoted to Ph.D student (or intern). This paper will try to quickly give you tools and useful links to better understand what are all the acronyms that you may encounter, LaTeX related things, CMS related things, etc (Nothing related to the Ecole Doctoral will be mentioned as rules given may change over years...). This list won't be exhaustive as there so many things to talk about but we hope that this will help you in any kind of way to fasten your progress in your work. For global IPHC commands, see: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/IPHCusefulCommands#VScode}{IPHC useful commands}. There is also a nice VScode tutorial if you a not familiar with it, it's a nice looking and developed IDE. It can be possible that by the time of your Ph.D, ZED IDE became a thing or another one.Good luck!  
+First and foremost, welcome to the CMS team of Strasbourg and congratulation for being promoted to Ph.D student (or intern). This paper will try to quickly give you tools and useful links to better understand what are all the acronyms that you may encounter, LaTeX related things, CMS related things, etc (Nothing related to the Ecole Doctoral will be mentioned as rules given may change over years...). This list won't be exhaustive as there are so many things to talk about but we hope that this will help you in any kind of way to fasten your progress in your work. For global IPHC commands, see: \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/IPHCusefulCommands#VScode}{IPHC useful commands}. There is also a nice VScode tutorial if you are not familiar with it, it's a nice looking and developed IDE. It can be possible that by the time of your Ph.D, ZED IDE became a thing or another one. Good luck!  
 
 \section{Acronyms}
     A set of Acronyms is defined in a Twiki page in : \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookGlossary}{TwikiAcronyms}. Twiki pages are like wiki pages but for the CMS documentation of everything. By the time you read this, this may have changed to gitlab or something else. We will just give some that you may encounter rapidly :
@@ -125,7 +125,7 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
   It will create a .c and .h file that you can use directly to run over the events of the ntuple.\\
   Again, with a Ntuple, you can use the edmDumpEventContent $<$name of file$>$ to check the collections available in the file
   
-  
+  Another point that can be really useful if you are running on Ntuples and you know that it will take quite some time to produce the output file (usually a root file with some histograms) : RDataframe. It is quite recent but different from basic c++. However, it is really powerful when you are applying basic  selections to produce histograms as it is performing columnar operations and not looping over events. It is also powerful as you can activate multi-threading allowing to run on multiple cpu's fastening your code. For example, in m case, a 5-hour long code took 3 min :D. An exemple of RDataframe code is given in the directory RDataFrame. 
 \section{Physics Analysis}
 
     When you start a physics analysis, you will probably invited to look for a Beyond the Standard Model physics process or improve a measurement of an existing quantity. For the former, since what you are looking for has not yet been discovered, you need simulation to learn the behavior of your signal in the CMS experiment. To simulate events (we say Monte-Carlo events or MC events), you need a generator. The one that you may encounter the most is MadGraph and you can actually use it on your own if you want (See Tutorial\_MC\_production\_for...). MadGraph is usually combined with another one, it can be Pythia8, powheg (there are others) to take care of the hadronisation as madgraph is not really efficient with the simulation of low energy jets while the other two have a better description of the low energy jets.  This is why you will encounter the name of Madgrapg and pythia or powheg when looking at MC samples in the CMS database (\href{https://cmsweb.cern.ch/das/}{CDAS}). Here are a few examples :\begin{itemize}
@@ -148,6 +148,7 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
     Once you have decided of the physics process you want to observe (and generated the MC samples of your signal if needed), you will have to define a set of cuts to observe your signal as it may be hidden because of too much background. These cuts can be performed on some basic kinematic variables but they can be much more sophisticated using Machine learning (Graph Neural Network, Boosted Decision Tree, Convolutionnal Neural Network, etc.). Most cuts have to keep the maximum of signal events while removing as much as possible the background events. First, you have to test the cuts on some MC samples (signal and background). Once you are satisfied with your cuts on simulation, you can go to the data (be careful, do not look at the signal region, where you expect to observe your signal as it is forbidden, you need the agreement of the CMS collaboration). To define a signal region, you will sometimes hear about the ABCD method which is about separating the phase space into 4 regions : A,B,C and D. For that, you need two decorrelated variables that you apply a cut on.
     We won't go further than that but the thing to remember is to define what you want to observe at the end: a mass, an angle, a specific distribution, etc. and how you define your region of signal, with which sets of cuts.\\
     \textbf{Note 1 :} If you are using private MC samples for your analysis, try to get a central production of them as soon as possible, it will avoid some unnecessary stress at the end of your Ph.D. You should discuss with the MC\&I contact of your group but you can already have a look at this : \href{https://cms-pdmv.gitbook.io/project/mccontact#preliminary-steps}{Steps to follow} and also this : \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/GitRepositoryForGenProduction}{generate pull request}.
+    \textcolor{red}{\textbf{Note 2:}} From all the configuration tested, only one works (the one that is not recommended :D \dots) : in cmssw-el7 singularity, you need to run the gridpack generation command with those parameters : ./gridpack\_generation.sh "name" cards/"name"/ local ALL slc7\_amd64\_gcc10 where "name" is the name of your process of your MG5 cards. And sorry, I can't really help with the fragments, I never quite understood how they worked. The only thing I can tell is to start with basic fragments and may be discuss with the MC&I contact. (example of fragment : genFragments/Hadronizer/13TeV/Hadronizer\_TuneCP5\_13TeV\_MLM\_5f\_max1j\_LHE\_pythia8\_cff.py)
     
 \subsection{Run 2}
     Global information about Run 2 : \\
@@ -182,7 +183,7 @@ First and foremost, welcome to the CMS team of Strasbourg and congratulation for
 
 \section{crab}
 
- During your Ph.D, you may need to run on MC simulation samples with millions of events. You can do that on your local computer but you may finish your Ph.D  before you finish analyzing the events. To address this issue, you have access to a grid. For that, you need a certificate that needs to be updated once every year. \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookChapter5}{CMSCertificate} and \href{https://indico.in2p3.fr/event/32895/}{Yannick's slides}. Once you have your certificate, you can submit crab jobs using the following commands (in a cms envrionnement area): 
+ During your Ph.D, you may need to run on MC simulation samples with millions of events. You can do that on your local computer but you may finish your Ph.D  before you finish analyzing the events. To address this issue, you have access to a grid. For that, you need a certificate that needs to be updated once every year. \href{https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookChapter5}{CMSCertificate} and \href{https://indico.in2p3.fr/event/32895/}{Yannick's slides}. Once you have your certificate, you can submit crab jobs using the following commands (in a cms environment area): 
  
 'source /cvmfs/cms.cern.ch/crab3/crab.sh' \\
 'voms-proxy-init -rfc -voms cms -valid 192:00'\\
@@ -212,18 +213,18 @@ During your Ph.D/ internship, you may want to run programs while you are enjoyin
 
 \begin{itemize}
     \item uiX \begin{enumerate}
-        \item screen -S <name>
+        \item screen -S $<name>$
         \item  "crtl+a+d" to detach from the session
         \item screen -R (to view all the sessions you have opened)
-        \item screen -R <name> (to continue working on a session)
-        \item screen -X -S <name> to kill a session
+        \item screen -R $<name>$ (to continue working on a session)
+        \item screen -X -S $<name>$ to kill a session
     \end{enumerate}
     \item lxplus \begin{enumerate}
         \item systemctl --user enable --now tmux.service (only the first time, i think)
-        \item tmux new -s <name>
+        \item tmux new -s $<name>$
         \item "crtl+b"+d to detach from the session ("exit" if you want to kill the session)
         \item tmux ls (to view all the sessions you have opened)
-        \item tmux attach -t <name> (to continue working on a session)
+        \item tmux attach -t $<name>$ (to continue working on a session)
     \end{enumerate}
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%
@@ -231,9 +232,9 @@ During your Ph.D/ internship, you may want to run programs while you are enjoyin
 For the people using crab (and potentially other systems), the output will be stored on dcache. To access the your data, you will need to have a valid certificate and enter the following command (NOT IN A cms environment):\begin{itemize}
     \item source /cvmfs/cms.cern.ch/crab3/crab.sh 
     \item (Potentially :) voms-proxy-init -rfc -voms cms -valid 192:00
-    \item gfal-ls davs://sbgdcache.in2p3.fr/cms/phedex/store/user/<name> to list the files (no option for ls is available)
+    \item gfal-ls davs://sbgdcache.in2p3.fr/cms/phedex/store/user/$<name>$ to list the files (no option for ls is available)
     \item Example : gfal-ls davs://sbgdcache.in2p3.fr/cms/phedex/store/user/pvaucell/
-    \item gfal-copy -r davs://sbgdcache.in2p3.fr/cms/phedex/store/user/pvaucell/<directory> . to copy files
+    \item gfal-copy -r davs://sbgdcache.in2p3.fr/cms/phedex/store/user/pvaucell/$<directory>$ . to copy files
 \end{itemize}
 \section{Conclusion}
 
