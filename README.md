@@ -6,5 +6,7 @@ You can check the pdf file to have all the information that you may need or want
 
 PS  : Download the pdf to have direct access to the different links included in it !
 
+PS 2 : THe MACRO directory stores potentially useful macros about generic or more specific stuff
+
 # Have a good Ph.D !
  La Relève
